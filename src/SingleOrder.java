@@ -7,7 +7,7 @@ public class SingleOrder
 	
 	private BigDecimal Price;
 	private String Size;
-	private long OrderID;
+	private String OrderID;
 	private long CV =	0;
 	private long EV	=	0;
 	private State orderState;
@@ -21,7 +21,7 @@ public class SingleOrder
 	private long CloseQty =	0;
 	
 	
-	public  SingleOrder(String F_Symbol,Side side1 , BigDecimal Price1,  String Size1, long lastOrderID, State status1,String Exch, String Comm1 )
+	public  SingleOrder(String F_Symbol,Side side1 , BigDecimal Price1,  String Size1, String lastOrderID, State status1,String Exch, String Comm1 )
 	{		
 		  Symbol 		= 	F_Symbol;
 		  Side 			=   side1 ;
@@ -94,7 +94,7 @@ public class SingleOrder
 	{
 		return this.Size;
 	}	
-	public long getOrderID()
+	public String getOrderID()
 	{
 		return this.OrderID;
 	}	

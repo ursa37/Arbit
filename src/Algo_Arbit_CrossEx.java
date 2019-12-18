@@ -77,18 +77,18 @@ public class Algo_Arbit_CrossEx implements Runnable {
 		b_TriggerOrder= true;
 		_logger.info("TriggerOrder" );
 		long OrderNum = (long) new Date().getTime();
-		SingleOrder F_Order = new SingleOrder("ETH/BTC", SideA, BestPriceA, TradeSize, OrderNum,SingleOrder.State.FILLED, "Binance", CommA);
-		OrderBook.AddOrder("ETH/BTC" , F_Order, OrderNum);  
+		SingleOrder F_Order = new SingleOrder("ETH/BTC", SideA, BestPriceA, TradeSize, "B"+OrderNum,SingleOrder.State.FILLED, "Binance", CommA);
+		OrderBook.AddOrder("ETH/BTC" , F_Order, "B"+OrderNum);  
 		_logger.info("TriggerOrder Binance {},{},{},{},{},{},{},{}", "ETH/BTC", SideA, BestPriceA, TradeSize, OrderNum,SingleOrder.State.FILLED, "Binance", CommA ); 
 		OrderBook.SetReplyUpdate();  
 		
 		OrderNum = (long) new Date().getTime();
-		SingleOrder F_Order2 = new SingleOrder("ETH/BTC", SideB, BestPriceB, TradeSize, OrderNum,SingleOrder.State.FILLED, "Huobi", CommB);
-		OrderBook.AddOrder("ETH/BTC" , F_Order2, OrderNum);
+		SingleOrder F_Order2 = new SingleOrder("ETH/BTC", SideB, BestPriceB, TradeSize, "H"+OrderNum,SingleOrder.State.FILLED, "Huobi", CommB);
+		OrderBook.AddOrder("ETH/BTC" , F_Order2, "H"+OrderNum);
 		OrderBook.SetReplyUpdate();  
 		_logger.info("TriggerOrder Binance {},{},{},{},{},{},{},{}", "ETH/BTC", SideB, BestPriceB, TradeSize, OrderNum,SingleOrder.State.FILLED, "Huobi", CommB );		 
 		 b_Signal =false;
-		 shutdown=true;		
+		
 	}
 	
 public void CalculateCost() {
@@ -218,47 +218,37 @@ public void SetCurrencyB(String F_CurrB) {
 	
 	public void run() {
 		while (!shutdown) {
-			
-			/*
-			if (PriceList.getLadderUpdate()) {
-				_logger.info("Price Ladder Change");
-				UpdateOrderQty();
+			if ( OrderCount >=  DailyLimit) {
+				shutdown =true;
 			}
-			*/
 			
-			if (b_Signal && OrderCount < DailyLimit) {
-					if (b_TriggerOrder == false ) 
-					{
-						System.out.println("Main: FireOrder: " + CurrA + " " + CurrB);
-						TriggerOrder();
-						//VerifyPosition();
-						 OrderCount = OrderCount + 1;
-						 b_TriggerOrder = false	;
-						 
-						 try {
-								Thread.sleep(1);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						 
-					} //else {
-						//System.out.println("Main: Continue Verifying");
-						//VerifyPosition();
-							//}
-			} 
-			else 
+			else
 			{
-				//System.out.println("Main:  CalculateCost");
-				CalculateCost();
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
+					if (b_Signal ) {
+						if (b_TriggerOrder == false ) 
+						{
+							System.out.println("Main: FireOrder: " + CurrA + " " + CurrB);
+							TriggerOrder();					
+							 OrderCount = OrderCount + 1;
+							 b_TriggerOrder = false	;
+						} 
+					} 
+					else 
+					{
+						//System.out.println("Main:  CalculateCost");
+						CalculateCost();
+						try {
+							Thread.sleep(1);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	
+						
+					}				
 				
 			}
+			
+			
 			
 		}
 	}
@@ -297,8 +287,7 @@ public void SetCurrencyB(String F_CurrB) {
 		try 
 		{
 			Format formatter = new SimpleDateFormat("dd_MMM_yy");
-		    String s = formatter.format(new Date());
-		    
+		    String s = formatter.format(new Date());		    
 		    Path currentRelativePath = Paths.get("");
 			String filepath = currentRelativePath.toAbsolutePath().toString();
 			System.out.println("Current relative path is: " + filepath);

@@ -422,7 +422,7 @@ public class AlgoScreen_CrytoAbitrage extends JFrame {
 		contentPane.add(lblHuobi);
 		
 		JScrollPane scrollPane_OB0 = new JScrollPane();
-		scrollPane_OB0.setBounds(10, 339, 759, 207);
+		scrollPane_OB0.setBounds(10, 339, 794, 207);
 		contentPane.add(scrollPane_OB0);
 		
 		JButton btnStartAlgo = new JButton("Start Algo");

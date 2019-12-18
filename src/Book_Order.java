@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public class Book_Order {
 	private Vector <SingleOrder > vec_Order = 		new Vector <SingleOrder>();	
-	private ConcurrentHashMap<Long,SingleOrder>	hmOrder0	=	new ConcurrentHashMap<Long,SingleOrder>();	
+	private ConcurrentHashMap<String,SingleOrder>	hmOrder0	=	new ConcurrentHashMap<String,SingleOrder>();	
 	private boolean b_OrderUpdate;
 	private static final Logger _logger = LoggerFactory.getLogger(Book_Order.class);	
 	  
@@ -16,7 +16,7 @@ public class Book_Order {
 	    	//System.out.println("OrderBook In") ;
 	} 	
 	
-	public synchronized void  AddOrder( String StockIndex, SingleOrder F_Order, long F_OrderID)	
+	public synchronized void  AddOrder( String StockIndex, SingleOrder F_Order, String F_OrderID)	
 	{			
 		_logger.info( "Book_Order AddOrder  Currrency" +   StockIndex + " OrderID : " +   F_OrderID);			
 		hmOrder0.put(F_OrderID , F_Order );
@@ -51,7 +51,7 @@ public class Book_Order {
 		}
 	}		
 		
-	public synchronized ConcurrentHashMap<Long,SingleOrder> gethmOrder( int StockIndex )
+	public synchronized ConcurrentHashMap<String,SingleOrder> gethmOrder( int StockIndex )
 	{		
 		return hmOrder0;
 	}	
@@ -59,7 +59,7 @@ public class Book_Order {
 	
 	
 	
-	public synchronized void UpdateOB_Order ( SingleOrder F_Order , ConcurrentHashMap<Long,SingleOrder> hmOrder ) 
+	public synchronized void UpdateOB_Order ( SingleOrder F_Order , ConcurrentHashMap<String,SingleOrder> hmOrder ) 
 	{
 		synchronized( hmOrder )
 		{

@@ -209,7 +209,7 @@ public class Table_MarketData extends AbstractTableModel implements Runnable {
     while (true) 
     {   		  
 	    		if (UILoadIndex<1)
-	    		{	
+	    		{	 
 	    			updateStocks();
 	    			//_logger.info("updateStocks()");
 	    		}

@@ -28,7 +28,7 @@ public class Table_OrderBook extends AbstractTableModel implements Runnable {
  private SingleOrder.Side Side1 ; 
  private BigDecimal Price1;  
  private String Size1; 
- private long lastOrderID; 
+ private String lastOrderID; 
  private SingleOrder.State Status1;
  private String Exchange;
 
@@ -36,7 +36,7 @@ public class Table_OrderBook extends AbstractTableModel implements Runnable {
  private String CurrentSymbol; 
 
  private SingleOrder OldOrder =		new SingleOrder (  F_Symbol,  Side1 ,  Price1,   Size1,  lastOrderID,  Status1, Exchange , Comm);
- private ConcurrentHashMap<Long,SingleOrder>	hmOrder	=	new ConcurrentHashMap<Long,SingleOrder>(); 
+ private ConcurrentHashMap<String,SingleOrder>	hmOrder	=	new ConcurrentHashMap<String,SingleOrder>(); 
  private Vector <SingleOrder > vec_Order = new Vector <SingleOrder>();    
  private  Book_Order CurrOB ;  
  private boolean  TBL_OrderUpdate;
